@@ -9,10 +9,7 @@ class TabelaCategorias(db: SQLiteDatabase) : BaseColumns{
     private val db : SQLiteDatabase = db
     fun cria() {
         db?.execSQL(
-            "CREATE TABLE " + NOME_TABELA+ "(" +
-                    BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    CAMPO_NOME + " TEXT NOT NULL " +
-                    ")"
+            "CREATE TABLE $NOME_TABELA ( ${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, $CAMPO_NOME TEXT NOT NULL)"
         )
 
     }
