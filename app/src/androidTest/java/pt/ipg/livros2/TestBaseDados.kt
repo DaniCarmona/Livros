@@ -58,9 +58,10 @@ class TestBaseDados {
     fun consegueAlterarCategorias(){
         val db = getBdLivrosOpenHelper().writableDatabase
 
+        val tabelaCategorias = getTabelaCategorias(db)
+
         val categoria = Categoria(nome="Sci")
 
-        val tabelaCategorias = getTabelaCategorias(db)
         categoria.id = insereCategoria(tabelaCategorias, categoria)
         categoria.nome="Sci-Fi"
         val registosAlterados = tabelaCategorias.update(
@@ -74,7 +75,24 @@ class TestBaseDados {
         db.close()
     }
 
+    @Test
+    fun consegueApagarCategorias(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Teste")
 
+
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+        
+        val registosEliminados =tabelaCategorias.delete(
+            "${BaseColumns._ID}=?",
+            arrayOf(categoria.id.toString())
+        )
+
+        assertEquals(1, registosEliminados)
+
+        db.close()
+    }
 
 
 }
