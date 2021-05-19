@@ -28,10 +28,11 @@ class TabelaCategorias(db: SQLiteDatabase) : BaseColumns{
 
     fun query(
             columns: Array<String>,
-            selection: String,
-            selecyionArgs: Array<String>,
-            groupBy: String, having: String,
-            orderBy: String
+            selection: String?,
+            selecyionArgs: Array<String>?,
+            groupBy: String?,
+            having: String?,
+            orderBy: String?
     ): Cursor? {
         return db.query(NOME_TABELA, columns, selection, selecyionArgs, groupBy, having, orderBy)
     }
@@ -39,6 +40,7 @@ class TabelaCategorias(db: SQLiteDatabase) : BaseColumns{
     companion object{
         const val NOME_TABELA = "categorias"
         const val CAMPO_NOME = "nome"
+        val TODOS_CAMPOS =arrayOf(BaseColumns._ID, CAMPO_NOME)
     }
 
 }

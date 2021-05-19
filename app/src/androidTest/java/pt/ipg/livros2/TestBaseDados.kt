@@ -27,6 +27,20 @@ class TestBaseDados {
         assertNotEquals(-1, id)
         return id
     }
+    private fun getCategoriaBD(
+        tabelaCategorias: TabelaCategorias, id: Long    ): Categoria {
+        val cursor = tabelaCategorias.query(
+            TabelaCategorias.TODOS_CAMPOS,
+            "${BaseColumns._ID}=?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        )
+        assertNotNull(cursor)
+        assert(cursor!!.moveToNext())
+        return Categoria.fromCursor(cursor)
+    }
 
     @Before
     fun apagaBaseDados() {
@@ -46,11 +60,12 @@ class TestBaseDados {
     @Test
     fun consegueInserirCategorias(){
         val db = getBdLivrosOpenHelper().writableDatabase
-
-        //val categoria = Categoria(nome="Drama")
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Drama")
 
         insereCategoria(getTabelaCategorias(db), Categoria(nome="Drama"))
-
+        val categoriaBD = getCategoriaBD(tabelaCategorias, categoria.id)
+        assertEquals(categoria, categoriaBD)
         db.close()
     }
 
@@ -93,6 +108,22 @@ class TestBaseDados {
 
         db.close()
     }
+
+    @Test
+    fun consegueLerCategorias(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Aventura")
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+
+        val categoriaBD = getCategoriaBD(tabelaCategorias, categoria.id)
+        assertEquals(categoria, categoriaBD)
+
+
+        db.close()
+    }
+
+
 
 
 }
