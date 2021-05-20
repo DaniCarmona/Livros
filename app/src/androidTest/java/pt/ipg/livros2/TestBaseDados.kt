@@ -21,15 +21,15 @@ class TestBaseDados {
     private fun getAppContext() = InstrumentationRegistry.getInstrumentation().targetContext
     private fun getBdLivrosOpenHelper() = BdLivrosOpenHelper(getAppContext())
     private fun getTabelaCategorias(db: SQLiteDatabase) = TabelaCategorias(db)
-    private fun getTabelaLivros(db: SQLiteDatabase) = TabelaLivros(db)
-    private fun insereCategoria(tabelaCategorias: TabelaCategorias, categoria: Categoria): Long {
-        val id = tabelaCategorias.insert(categoria.toContentValues())
+    private fun insereCategoria(tabela: TabelaCategorias, categoria: Categoria): Long {
+        val id = tabela.insert(categoria.toContentValues())
         assertNotEquals(-1, id)
+
         return id
     }
     private fun getCategoriaBD(
-        tabelaCategorias: TabelaCategorias, id: Long    ): Categoria {
-        val cursor = tabelaCategorias.query(
+        tabela: TabelaCategorias, id: Long    ): Categoria {
+        val cursor = tabela.query(
             TabelaCategorias.TODOS_CAMPOS,
             "${BaseColumns._ID}=?",
             arrayOf(id.toString()),
@@ -60,12 +60,13 @@ class TestBaseDados {
     @Test
     fun consegueInserirCategorias(){
         val db = getBdLivrosOpenHelper().writableDatabase
-        val tabelaCategorias = getTabelaCategorias(db)
-        val categoria = Categoria(nome="Drama")
+        val tabelaCategorias = TabelaCategorias(db)
 
-        insereCategoria(getTabelaCategorias(db), Categoria(nome="Drama"))
-        val categoriaBD = getCategoriaBD(tabelaCategorias, categoria.id)
-        assertEquals(categoria, categoriaBD)
+        val categoria = Categoria(nome = "Drama")
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+
+        assertEquals(categoria, getCategoriaBD(tabelaCategorias, categoria.id))
+
         db.close()
     }
 
@@ -122,8 +123,4 @@ class TestBaseDados {
 
         db.close()
     }
-
-
-
-
 }
