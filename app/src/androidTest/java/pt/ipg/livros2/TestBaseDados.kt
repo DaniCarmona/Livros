@@ -63,7 +63,7 @@ class TestBaseDados {
         val tabelaCategorias = getTabelaCategorias(db)
         val categoria = Categoria(nome="Drama")
 
-        insereCategoria(getTabelaCategorias(db), Categoria(nome="Drama"))
+        categoria.id = insereCategoria(getTabelaCategorias(db), Categoria(nome="Drama"))
         val categoriaBD = getCategoriaBD(tabelaCategorias, categoria.id)
         assertEquals(categoria, categoriaBD)
         db.close()
