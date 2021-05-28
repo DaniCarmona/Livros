@@ -27,6 +27,13 @@ class TestBaseDados {
         assertNotEquals(-1, id)
         return id
     }
+
+    private fun insereLivro(tabelaLivros: TabelaLivros, livro: Livro): Long {
+        val id = tabelaLivros.insert(livro.toContentValues())
+        assertNotEquals(-1, id)
+        return id
+    }
+
     private fun getCategoriaBD(
         tabelaCategorias: TabelaCategorias, id: Long    ): Categoria {
         val cursor = tabelaCategorias.query(
@@ -42,6 +49,20 @@ class TestBaseDados {
         return Categoria.fromCursor(cursor)
     }
 
+    private fun getLivroBD( tabelaLivros: TabelaLivros, id: Long    ): Livro {
+        val cursor = tabelaLivros.query(
+                TabelaLivros.TODOS_CAMPOS,
+                "${BaseColumns._ID}=?",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+        )
+        assertNotNull(cursor)
+        assert(cursor!!.moveToNext())
+        return Livro.fromCursor(cursor)
+    }
+
     @Before
     fun apagaBaseDados() {
         getAppContext().deleteDatabase(BdLivrosOpenHelper.NOME_BASE_DADOS)
@@ -55,7 +76,6 @@ class TestBaseDados {
 
         db.close()
     }
-
 
     @Test
     fun consegueInserirCategorias(){
@@ -123,7 +143,21 @@ class TestBaseDados {
         db.close()
     }
 
+    @Test
+    fun consegueInserirLivros(){
+        val db = getBdLivrosOpenHelper().writableDatabase
 
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Aventura")
+        categoria.id = insereCategoria(tabelaCategorias, Categoria(nome="Drama"))
+
+        val tabelaLivros = getTabelaLivros(db);
+        val livro = Livro(titulo = "O Leão que temos cá dentro", autor = "Rachel Bright", idCategoria = categoria.id )
+        livro.id = insereLivro(tabelaLivros, livro)
+        val livroBD = getLivroBD(tabelaLivros, livro.id)
+        assertEquals(livro, livroBD)
+        db.close()
+    }
 
 
 }
