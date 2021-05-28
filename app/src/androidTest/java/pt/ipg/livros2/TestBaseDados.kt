@@ -149,15 +149,46 @@ class TestBaseDados {
 
         val tabelaCategorias = getTabelaCategorias(db)
         val categoria = Categoria(nome="Aventura")
-        categoria.id = insereCategoria(tabelaCategorias, Categoria(nome="Drama"))
+        categoria.id = insereCategoria(tabelaCategorias, Categoria(nome="Aventura"))
 
         val tabelaLivros = getTabelaLivros(db);
         val livro = Livro(titulo = "O Leão que temos cá dentro", autor = "Rachel Bright", idCategoria = categoria.id )
         livro.id = insereLivro(tabelaLivros, livro)
+
         val livroBD = getLivroBD(tabelaLivros, livro.id)
         assertEquals(livro, livroBD)
         db.close()
     }
 
+    @Test
+    fun consegueLivros(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Mistério")
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+
+        val tabelaLivros = getTabelaLivros(db);
+        val livro = Livro(titulo = "?", autor = "?", idCategoria = categoria.id )
+        livro.id = insereLivro(tabelaLivros, livro)
+
+        livro.titulo = "Ninfeias Negras"
+        livro.autor = "Michel Bussi"
+        livro.idCategoria = categoria.id
+
+
+        val registosAlterados = tabelaLivros.update(
+                livro.toContentValues(),
+                "${BaseColumns._ID}=?",
+                arrayOf(livro.id.toString())
+        )
+
+        assertEquals(1, registosAlterados)
+        val livroBD = getLivroBD(tabelaLivros, livro.id)
+        assertEquals(livro, livroBD)
+        db.close()
+    }
+
+    
 
 }
