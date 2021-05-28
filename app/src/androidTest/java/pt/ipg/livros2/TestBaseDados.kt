@@ -161,7 +161,7 @@ class TestBaseDados {
     }
 
     @Test
-    fun consegueLivros(){
+    fun consegueAlterarLivros(){
         val db = getBdLivrosOpenHelper().writableDatabase
 
         val tabelaCategorias = getTabelaCategorias(db)
@@ -189,6 +189,6 @@ class TestBaseDados {
         db.close()
     }
 
-    
+
 
 }
