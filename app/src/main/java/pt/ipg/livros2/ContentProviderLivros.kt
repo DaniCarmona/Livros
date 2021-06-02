@@ -6,8 +6,13 @@ import android.database.Cursor
 import android.net.Uri
 
 class ContentProviderLivros : ContentProvider(){
+    private var bdLivrosOpenHelper : BdLivrosOpenHelper? = null
+
     override fun onCreate(): Boolean {
-        TODO("Not yet implemented")
+        bdLivrosOpenHelper = BdLivrosOpenHelper(context)
+
+
+        return true
     }
 
     override fun query(
