@@ -74,19 +74,26 @@ class ContentProviderLivros : ContentProvider(){
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Not yet implemented")
+        val bd = bdLivrosOpenHelper!!.writableDatabase
+
+        val id = when(getUriMatcher().match(uri)){
+            URI_LIVROS -> TabelaLivros(bd).insert(values!!)
+            URI_CATEGORIAS -> TabelaCategorias(bd).insert(values!!)
+            else -> -1
+        }
+
+        if (id == -1L) return null
+        return Uri.withAppendedPath(uri, id.toString())
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
         val bd = bdLivrosOpenHelper!!.writableDatabase
 
         return when(getUriMatcher().match(uri)){
-            URI_LIVROS -> 0
             URI_LIVRO_ESPECIFICO -> TabelaLivros(bd).delete(
                 "${BaseColumns._ID}=?",
                 arrayOf(uri.lastPathSegment!!) // id
             )
-            URI_CATEGORIAS -> 0
             URI_CATEGORIA_ESPECIFICO ->TabelaCategorias(bd).delete(
                 "${BaseColumns._ID}=?",
                 arrayOf(uri.lastPathSegment!!) // id
@@ -104,13 +111,11 @@ class ContentProviderLivros : ContentProvider(){
         val bd = bdLivrosOpenHelper!!.writableDatabase
 
         return when(getUriMatcher().match(uri)){
-            URI_LIVROS -> 0
             URI_LIVRO_ESPECIFICO -> TabelaLivros(bd).update(
                 values!!,
                 "${BaseColumns._ID}=?",
                 arrayOf(uri.lastPathSegment!!) // id
             )
-            URI_CATEGORIAS -> 0
             URI_CATEGORIA_ESPECIFICO ->TabelaCategorias(bd).update(
                 values!!,
                 "${BaseColumns._ID}=?",
