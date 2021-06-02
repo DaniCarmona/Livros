@@ -21,15 +21,22 @@ class TestBaseDados {
     private fun getAppContext() = InstrumentationRegistry.getInstrumentation().targetContext
     private fun getBdLivrosOpenHelper() = BdLivrosOpenHelper(getAppContext())
     private fun getTabelaCategorias(db: SQLiteDatabase) = TabelaCategorias(db)
-    private fun insereCategoria(tabela: TabelaCategorias, categoria: Categoria): Long {
-        val id = tabela.insert(categoria.toContentValues())
+    private fun getTabelaLivros(db: SQLiteDatabase) = TabelaLivros(db)
+    private fun insereCategoria(tabelaCategorias: TabelaCategorias, categoria: Categoria): Long {
+        val id = tabelaCategorias.insert(categoria.toContentValues())
         assertNotEquals(-1, id)
-
         return id
     }
+
+    private fun insereLivro(tabelaLivros: TabelaLivros, livro: Livro): Long {
+        val id = tabelaLivros.insert(livro.toContentValues())
+        assertNotEquals(-1, id)
+        return id
+    }
+
     private fun getCategoriaBD(
-        tabela: TabelaCategorias, id: Long    ): Categoria {
-        val cursor = tabela.query(
+        tabelaCategorias: TabelaCategorias, id: Long    ): Categoria {
+        val cursor = tabelaCategorias.query(
             TabelaCategorias.TODOS_CAMPOS,
             "${BaseColumns._ID}=?",
             arrayOf(id.toString()),
@@ -40,6 +47,20 @@ class TestBaseDados {
         assertNotNull(cursor)
         assert(cursor!!.moveToNext())
         return Categoria.fromCursor(cursor)
+    }
+
+    private fun getLivroBD( tabelaLivros: TabelaLivros, id: Long    ): Livro {
+        val cursor = tabelaLivros.query(
+                TabelaLivros.TODOS_CAMPOS,
+                "${BaseColumns._ID}=?",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+        )
+        assertNotNull(cursor)
+        assert(cursor!!.moveToNext())
+        return Livro.fromCursor(cursor)
     }
 
     @Before
@@ -56,17 +77,15 @@ class TestBaseDados {
         db.close()
     }
 
-
     @Test
     fun consegueInserirCategorias(){
         val db = getBdLivrosOpenHelper().writableDatabase
-        val tabelaCategorias = TabelaCategorias(db)
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Drama")
 
-        val categoria = Categoria(nome = "Drama")
-        categoria.id = insereCategoria(tabelaCategorias, categoria)
-
-        assertEquals(categoria, getCategoriaBD(tabelaCategorias, categoria.id))
-
+        categoria.id = insereCategoria(getTabelaCategorias(db), Categoria(nome="Drama"))
+        val categoriaBD = getCategoriaBD(tabelaCategorias, categoria.id)
+        assertEquals(categoria, categoriaBD)
         db.close()
     }
 
@@ -119,6 +138,91 @@ class TestBaseDados {
 
         val categoriaBD = getCategoriaBD(tabelaCategorias, categoria.id)
         assertEquals(categoria, categoriaBD)
+
+
+        db.close()
+    }
+
+    @Test
+    fun consegueInserirLivros(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Aventura")
+        categoria.id = insereCategoria(tabelaCategorias, Categoria(nome="Aventura"))
+
+        val tabelaLivros = getTabelaLivros(db);
+        val livro = Livro(titulo = "O Leão que temos cá dentro", autor = "Rachel Bright", idCategoria = categoria.id )
+        livro.id = insereLivro(tabelaLivros, livro)
+
+        val livroBD = getLivroBD(tabelaLivros, livro.id)
+        assertEquals(livro, livroBD)
+        db.close()
+    }
+
+    @Test
+    fun consegueAlterarLivros(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Mistério")
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+
+        val tabelaLivros = getTabelaLivros(db);
+        val livro = Livro(titulo = "?", autor = "?", idCategoria = categoria.id )
+        livro.id = insereLivro(tabelaLivros, livro)
+
+        livro.titulo = "Ninfeias Negras"
+        livro.autor = "Michel Bussi"
+        livro.idCategoria = categoria.id
+
+
+        val registosAlterados = tabelaLivros.update(
+                livro.toContentValues(),
+                "${BaseColumns._ID}=?",
+                arrayOf(livro.id.toString())
+        )
+
+        assertEquals(1, registosAlterados)
+        val livroBD = getLivroBD(tabelaLivros, livro.id)
+        assertEquals(livro, livroBD)
+        db.close()
+    }
+
+    fun consegueApagarLivros(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Auto Ajuda")
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+
+        val tabelaLivros = getTabelaLivros(db);
+        val livro = Livro(titulo = "teste", autor = "teste", idCategoria = categoria.id )
+        livro.id = insereLivro(tabelaLivros, livro)
+
+        val registosEliminados =tabelaLivros.delete(
+                "${BaseColumns._ID}=?",
+                arrayOf(livro.id.toString())
+        )
+
+        assertEquals(1, registosEliminados)
+
+        db.close()
+    }
+
+    fun consegueLerLivros(){
+        val db = getBdLivrosOpenHelper().writableDatabase
+
+        val tabelaCategorias = getTabelaCategorias(db)
+        val categoria = Categoria(nome="Culinaria")
+        categoria.id = insereCategoria(tabelaCategorias, categoria)
+
+        val tabelaLivros = getTabelaLivros(db);
+        val livro = Livro(titulo = "Chefe Profissional", autor = "Instituto Americano da Culinaria", idCategoria = categoria.id )
+        livro.id = insereLivro(tabelaLivros, livro)
+
+        val livroBD = getLivroBD(tabelaLivros, livro.id)
+        assertEquals(livro, livroBD)
 
 
         db.close()
