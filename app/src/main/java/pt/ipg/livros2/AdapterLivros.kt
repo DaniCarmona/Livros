@@ -34,7 +34,7 @@ class AdapterLivros(var cursor: Cursor? = null) : RecyclerView.Adapter<AdapterLi
      * @see .onBindViewHolder
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderLivro {
-        TODO("Not yet implemented")
+
     }
 
     /**
@@ -68,6 +68,6 @@ class AdapterLivros(var cursor: Cursor? = null) : RecyclerView.Adapter<AdapterLi
      * @return The total number of items in this adapter.
      */
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return cursor?.count ?: 0
     }
 }
