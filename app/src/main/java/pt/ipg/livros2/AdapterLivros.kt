@@ -3,10 +3,25 @@ package pt.ipg.livros2
 import android.database.Cursor
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdapterLivros(val fragment: ListaLivrosFragment ,var cursor: Cursor? = null) : RecyclerView.Adapter<AdapterLivros.ViewHolderLivro>() {
+class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<AdapterLivros.ViewHolderLivro>() {
+    var cursor: Cursor? = null
+        get()= field
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     class ViewHolderLivro(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textViewTitulo = itemView.findViewById<TextView>(R.id.textViewTitulo)
+        val textViewAutor = itemView.findViewById<TextView>(R.id.textViewAutor)
+
+        fun atualizaLivro(livro: Livro) {
+            textViewTitulo.text = livro.titulo
+            textViewAutor.text = livro.autor
+        }
 
     }
 
@@ -35,6 +50,7 @@ class AdapterLivros(val fragment: ListaLivrosFragment ,var cursor: Cursor? = nul
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderLivro {
         val itemLivro =fragment.layoutInflater.inflate(R.layout.item_livro, parent, false)
+        notifyDataSetChanged()
         return ViewHolderLivro(itemLivro)
     }
 
@@ -60,7 +76,8 @@ class AdapterLivros(val fragment: ListaLivrosFragment ,var cursor: Cursor? = nul
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ViewHolderLivro, position: Int) {
-        TODO("Not yet implemented")
+        cursor!!.moveToPosition(position)
+        holder.atualizaLivro(Livro.fromCursor(cursor!!))
     }
 
     /**
