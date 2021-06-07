@@ -37,7 +37,7 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerViewLivros = view.findViewById<RecyclerView>(R.id.recyclerViewLivros)
-        adapterLivros = AdapterLivros()
+        adapterLivros = AdapterLivros(this)
         recyclerViewLivros.adapter = adapterLivros
         recyclerViewLivros.layoutManager = LinearLayoutManager(requireContext())
 
