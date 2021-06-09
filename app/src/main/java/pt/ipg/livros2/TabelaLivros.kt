@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
+import android.provider.FontsContract
 
 class TabelaLivros (db: SQLiteDatabase) : BaseColumns {
     private val db : SQLiteDatabase = db
@@ -31,7 +32,49 @@ class TabelaLivros (db: SQLiteDatabase) : BaseColumns {
             having: String?,
             orderBy: String?
     ): Cursor? {
-        return db.query(NOME_TABELA, columns, selection, selectionArgs, groupBy, having, orderBy)
+        val ultimaColuna =columns.size - 1
+        var posCampoExternoNomeCategoria = -1 //-1 indica que não foi pedido
+        for(i in 0..ultimaColuna){
+            if(columns[i]== CAMPO_EXTERNO_NOME_CATEGORIA) {
+                posCampoExternoNomeCategoria = i
+                break
+            }
+        }
+
+        if(posCampoExternoNomeCategoria==-1) { //não existem camppos de outra tabela
+            return db.query(NOME_TABELA, columns, selection, selectionArgs, groupBy, having, orderBy)
+        }
+
+        var colunas = ""
+
+        for(i in 0..ultimaColuna){
+            val nomeColuna: String
+
+            if(i==posCampoExternoNomeCategoria){
+                nomeColuna="${TabelaCategorias.NOME_TABELA}.${TabelaCategorias.CAMPO_NOME} AS $CAMPO_EXTERNO_NOME_CATEGORIA"
+            }else{
+                nomeColuna= "$NOME_TABELA.${columns[i]}"
+            }
+
+            if(i>0) colunas += ","
+            colunas += nomeColuna
+        }
+
+        val tabelas = "$NOME_TABELA INNER JOIN ${TabelaCategorias.NOME_TABELA} ON ${TabelaCategorias.NOME_TABELA}.${BaseColumns._ID} =$NOME_TABELA.$CAMPO_ID_CATEGORIA"
+
+        var sqlAdicional = ""
+        if(selection != null) sqlAdicional += "WHERE $selection"
+        if(groupBy != null){
+            sqlAdicional += "GROUP BY $groupBy"
+            if(having != null) sqlAdicional += "HAVING $having"
+        }
+
+        if(orderBy != null){
+            //sqlAdicional += "ORDER BY $orderBy"
+        }
+
+        val sql = "SELECT $colunas FROM $tabelas $sqlAdicional"
+        return db.rawQuery(sql, selectionArgs)
     }
 
     companion object{
@@ -39,8 +82,10 @@ class TabelaLivros (db: SQLiteDatabase) : BaseColumns {
         const val CAMPO_TITULO = "titulo"
         const val CAMPO_AUTOR = "autor"
         const val CAMPO_ID_CATEGORIA = "id_categoria"
+        const val CAMPO_EXTERNO_NOME_CATEGORIA = "nome_categoria"
 
-        val TODOS_CAMPOS =arrayOf(BaseColumns._ID, CAMPO_TITULO, CAMPO_AUTOR, CAMPO_ID_CATEGORIA)
+        val TODOS_CAMPOS =arrayOf(BaseColumns._ID, CAMPO_TITULO, CAMPO_AUTOR, CAMPO_ID_CATEGORIA, CAMPO_EXTERNO_NOME_CATEGORIA)
+        val TODOS_CAMPOS_TABELA =arrayOf(BaseColumns._ID, CAMPO_TITULO, CAMPO_AUTOR, CAMPO_ID_CATEGORIA)
 
         //categoria         livros
         //     1   -------    N
