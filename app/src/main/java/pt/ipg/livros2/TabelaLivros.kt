@@ -63,14 +63,14 @@ class TabelaLivros (db: SQLiteDatabase) : BaseColumns {
         val tabelas = "$NOME_TABELA INNER JOIN ${TabelaCategorias.NOME_TABELA} ON ${TabelaCategorias.NOME_TABELA}.${BaseColumns._ID} =$NOME_TABELA.$CAMPO_ID_CATEGORIA"
 
         var sqlAdicional = ""
-        if(selection != null) sqlAdicional += "WHERE $selection"
+        if(selection != null) sqlAdicional += " WHERE $selection"
         if(groupBy != null){
-            sqlAdicional += "GROUP BY $groupBy"
-            if(having != null) sqlAdicional += "HAVING $having"
+            sqlAdicional += " GROUP BY $groupBy"
+            if(having != null) sqlAdicional += " HAVING $having"
         }
 
         if(orderBy != null){
-            //sqlAdicional += "ORDER BY $orderBy"
+            sqlAdicional += " ORDER BY $orderBy"
         }
 
         val sql = "SELECT $colunas FROM $tabelas $sqlAdicional"
