@@ -17,10 +17,12 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
     class ViewHolderLivro(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewTitulo = itemView.findViewById<TextView>(R.id.textViewTitulo)
         val textViewAutor = itemView.findViewById<TextView>(R.id.textViewAutor)
+        val textViewCategoria = itemView.findViewById<TextView>(R.id.textViewCategoria)
 
         fun atualizaLivro(livro: Livro) {
             textViewTitulo.text = livro.titulo
             textViewAutor.text = livro.autor
+            textViewAutor.text = livro.nomeCategoria
         }
 
     }

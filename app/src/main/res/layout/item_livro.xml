@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,15 +8,12 @@
 
     <TextView
         android:id="@+id/textViewTitulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margem_campos"
-        android:layout_marginLeft="@dimen/margem_campos"
-        android:layout_marginTop="@dimen/margem_campos"
-        android:layout_marginEnd="@dimen/margem_campos"
-        android:layout_marginRight="@dimen/margem_campos"
+        android:layout_width="227dp"
+        android:layout_height="30dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/corDestaque"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="4dp"
         tools:text="Chefe Profissional" />
 
     <TextView
@@ -23,20 +21,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margem_campos"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="#938E8E"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitulo"
         tools:text="Instituto Americano da Culinaria" />
 
     <TextView
         android:id="@+id/textViewCategoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margem_campos"
-        android:layout_marginLeft="@dimen/margem_campos"
-        android:layout_marginEnd="@dimen/margem_campos"
-        android:layout_marginRight="@dimen/margem_campos"
-        android:layout_marginBottom="@dimen/margem_campos"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
         android:gravity="end"
         android:textColor="@color/corDestaque"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTitulo"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitulo"
         tools:text="Aventura" />
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
