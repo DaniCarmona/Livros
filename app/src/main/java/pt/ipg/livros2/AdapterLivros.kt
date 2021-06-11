@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<AdapterLivros.ViewHolderLivro>() {
@@ -14,17 +15,38 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
             notifyDataSetChanged()
         }
 
-    class ViewHolderLivro(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolderLivro(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val textViewTitulo = itemView.findViewById<TextView>(R.id.textViewTitulo)
         val textViewAutor = itemView.findViewById<TextView>(R.id.textViewAutor)
         val textViewCategoria = itemView.findViewById<TextView>(R.id.textViewCategoria)
 
+        init{
+            itemView.setOnClickListener(this)
+        }
+
         fun atualizaLivro(livro: Livro) {
             textViewTitulo.text = livro.titulo
             textViewAutor.text = livro.autor
-            textViewAutor.text = livro.nomeCategoria
+            textViewCategoria.text = livro.nomeCategoria
         }
 
+        override fun onClick(v: View?) {
+            selecionado?.desSeleciona()
+            seleciona()
+        }
+
+        fun seleciona() {
+            selecionado = this
+            itemView.setBackgroundResource(R.color.corSelecao)
+        }
+
+        fun desSeleciona() {
+            itemView.setBackgroundResource(android.R.color.white)
+        }
+
+        companion object{
+            var selecionado: ViewHolderLivro? = null
+        }
     }
 
     /**
@@ -90,4 +112,5 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
     override fun getItemCount(): Int {
         return cursor?.count ?: 0
     }
+
 }
