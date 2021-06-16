@@ -136,11 +136,6 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         adapterLivros!!.cursor = null
     }
 
-    public fun livroSelecionadoAlterado(){
-        val livro = AdapterLivros.getLivroSelecionado()
-        (activity as MainActivity).atualizaMenuListaLivros(livro != null)
-    }
-
     companion object {
         const val ID_LOADER_MANAGER_LIVROS = 0
     }
