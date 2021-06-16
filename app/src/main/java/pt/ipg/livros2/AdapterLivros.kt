@@ -16,15 +16,19 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
         }
 
     class ViewHolderLivro(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val textViewTitulo = itemView.findViewById<TextView>(R.id.textViewTitulo)
-        val textViewAutor = itemView.findViewById<TextView>(R.id.textViewAutor)
-        val textViewCategoria = itemView.findViewById<TextView>(R.id.textViewCategoria)
+        private val textViewTitulo = itemView.findViewById<TextView>(R.id.textViewTitulo)
+        private val textViewAutor = itemView.findViewById<TextView>(R.id.textViewAutor)
+        private val textViewCategoria = itemView.findViewById<TextView>(R.id.textViewCategoria)
+
+        internal var livro : Livro? = null
 
         init{
             itemView.setOnClickListener(this)
         }
 
         fun atualizaLivro(livro: Livro) {
+            this.livro = livro
+
             textViewTitulo.text = livro.titulo
             textViewAutor.text = livro.autor
             textViewCategoria.text = livro.nomeCategoria
@@ -47,6 +51,10 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
         companion object{
             var selecionado: ViewHolderLivro? = null
         }
+    }
+
+    companion object {
+        public fun getLivroSelecionado() = ViewHolderLivro.selecionado?.livro
     }
 
     /**
