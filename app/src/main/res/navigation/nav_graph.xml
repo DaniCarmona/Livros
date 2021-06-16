@@ -9,7 +9,7 @@
         android:id="@+id/ListaLivrosFragment"
         android:name="pt.ipg.livros2.ListaLivrosFragment"
         android:label="@string/lista_livros_fragment_label"
-        tools:layout="@layout/ListaLivrosFragment">
+        tools:layout="@layout/fragment_lista_livros">
 
         <action
             android:id="@+id/action_listalivros_to_novolivro"

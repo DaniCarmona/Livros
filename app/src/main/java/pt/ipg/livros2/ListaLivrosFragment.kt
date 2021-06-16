@@ -31,11 +31,12 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        DadosApp.fragmentListaLivros = this
 
         _binding = FragmentListaLivrosBinding.inflate(inflater, container, false)
         return binding.root
-
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
