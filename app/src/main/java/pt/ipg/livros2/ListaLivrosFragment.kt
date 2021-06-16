@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.loader.app.LoaderManager
@@ -47,7 +48,37 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         LoaderManager.getInstance(this)
             .initLoader(ID_LOADER_MANAGER_LIVROS, null, this)
 
-//            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+    }
+
+    fun navegaNovoLivro(){
+        findNavController().navigate(R.id.action_listalivros_to_novolivro)
+    }
+
+    fun navegaAlterarLivro(){
+        // todo: navega
+    }
+
+    fun navegaEliminarLivro(){
+        // todo: navega
+    }
+
+    fun processaOpcaoMenu(item: MenuItem): Boolean {
+         when (item.itemId) {
+             R.id.action_novo_livro -> {
+                 navegaNovoLivro()
+                 return true
+             }
+             R.id.action_alterar_livro -> {
+                 navegaAlterarLivro()
+                 return true
+             }
+             R.id.action_eliminar_livro -> {
+                 navegaEliminarLivro()
+                 return true
+             }
+             else->return false
+        }
+
     }
 
     override fun onDestroyView() {

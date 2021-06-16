@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NovoLivroFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margem_campos">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/t_tulo"
+            android:inputType="textLongMessage|text|textAutoComplete" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextAutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margem_campos"
+            android:layout_marginTop="@dimen/margem_campos"
+            android:hint="@string/autor"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margem_campos"
+        android:layout_marginTop="@dimen/margem_campos"
+        android:text="@string/categoria" />
+
+    <Spinner
+        android:id="@+id/spinnerCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margem_campos"
+        android:layout_marginLeft="@dimen/margem_campos"
+        android:layout_marginEnd="@dimen/margem_campos"
+        android:layout_marginRight="@dimen/margem_campos" />
+
+</LinearLayout>
