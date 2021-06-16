@@ -21,12 +21,14 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
         private val textViewCategoria = itemView.findViewById<TextView>(R.id.textViewCategoria)
 
         internal var livro : Livro? = null
+        lateinit var adapterLivros: AdapterLivros
 
         init{
             itemView.setOnClickListener(this)
         }
 
-        fun atualizaLivro(livro: Livro) {
+        fun atualizaLivro(adapter:AdapterLivros, livro: Livro) {
+            this.adapterLivros.livroAtualizado()
             this.livro = livro
 
             textViewTitulo.text = livro.titulo
@@ -56,6 +58,8 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
     companion object {
         public fun getLivroSelecionado() = ViewHolderLivro.selecionado?.livro
     }
+
+    fun livroAtualizado() = fragment.livroSelecionadoAlterado()
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -109,7 +113,7 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
      */
     override fun onBindViewHolder(holder: ViewHolderLivro, position: Int) {
         cursor!!.moveToPosition(position)
-        holder.atualizaLivro(Livro.fromCursor(cursor!!))
+        holder.atualizaLivro(this, Livro.fromCursor(cursor!!))
     }
 
     /**

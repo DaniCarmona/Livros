@@ -1,35 +1,38 @@
 package pt.ipg.livros2
 
-import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
-import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import pt.ipg.livros2.databinding.FragmentListaLivrosBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
+    private var _binding: FragmentListaLivrosBinding? = null
     private var adapterLivros : AdapterLivros? = null
 
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.lista_livros_fragment, container, false)
+
+        _binding = FragmentListaLivrosBinding.inflate(inflater, container, false)
+        return binding.root
 
     }
 
@@ -41,11 +44,15 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         recyclerViewLivros.adapter = adapterLivros
         recyclerViewLivros.layoutManager = LinearLayoutManager(requireContext())
 
-        val loaderManager = LoaderManager.getInstance(this)
-        loaderManager.initLoader(ID_LOADER_MANAGER_LIVROS, null, this)
+        LoaderManager.getInstance(this)
+            .initLoader(ID_LOADER_MANAGER_LIVROS, null, this)
 
-        //view.findViewById<Button>(R.id.button_first).setOnClickListener {
-          //  findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+//            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     /**
@@ -129,8 +136,12 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         adapterLivros!!.cursor = null
     }
 
-    companion object{
-        const val ID_LOADER_MANAGER_LIVROS = 0
+    public fun livroSelecionadoAlterado(){
+        val livro = AdapterLivros.getLivroSelecionado()
+        (activity as MainActivity).atualizaMenuListaLivros(livro != null)
     }
 
+    companion object {
+        const val ID_LOADER_MANAGER_LIVROS = 0
+    }
 }
