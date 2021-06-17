@@ -20,8 +20,7 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
         private val textViewAutor = itemView.findViewById<TextView>(R.id.textViewAutor)
         private val textViewCategoria = itemView.findViewById<TextView>(R.id.textViewCategoria)
 
-        internal var livro : Livro? = null
-        lateinit var adapterLivros: AdapterLivros
+        private lateinit var livro: Livro
 
         init{
             itemView.setOnClickListener(this)
@@ -39,16 +38,18 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
         override fun onClick(v: View?) {
             selecionado?.desSeleciona()
             seleciona()
-            DadosApp.livroSelecionado = livro
-            DadosApp.activity.atualizaMenuListaLivros(true)
         }
 
         fun seleciona() {
             selecionado = this
             itemView.setBackgroundResource(R.color.corSelecao)
+            DadosApp.livroSelecionado = livro
+            DadosApp.activity.atualizaMenuListaLivros(true)
+
         }
 
         fun desSeleciona() {
+            selecionado = this
             itemView.setBackgroundResource(android.R.color.white)
         }
 
@@ -58,7 +59,7 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
     }
 
     companion object {
-        public fun getLivroSelecionado() = ViewHolderLivro.selecionado?.livro
+        var selecionado : ViewHolderLivro? = null
     }
 
 
@@ -88,7 +89,7 @@ class AdapterLivros(val fragment: ListaLivrosFragment) : RecyclerView.Adapter<Ad
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderLivro {
         val itemLivro =fragment.layoutInflater.inflate(R.layout.item_livro, parent, false)
-        notifyDataSetChanged()
+
         return ViewHolderLivro(itemLivro)
     }
 

@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var menu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 if(DadosApp.fragmentListaLivros.processaOpcaoMenu(item)){
                     return true
                 }else{
-                    super.onOptionsItemSelected(item)
+                    return super.onOptionsItemSelected(item)
                 }
             }
         }
