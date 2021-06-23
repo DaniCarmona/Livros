@@ -48,7 +48,7 @@ class NovoLivroFragment : Fragment() {
     }
 
     fun cancelar(){
-
+        findNavController().navigate(R.id.action_novolivro_to_listalivros)
     }
 
     fun processaOpcaoMenu(item: MenuItem): Boolean {
