@@ -11,10 +11,12 @@ import android.widget.EditText
 import android.widget.SimpleAdapter
 import android.widget.SimpleCursorAdapter
 import android.widget.Spinner
+import androidx.core.view.get
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import pt.ipg.livros2.databinding.FragmentNovoLivroBinding
 
 /**
@@ -63,7 +65,31 @@ class NovoLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     fun guarda(){
+        val titulo = editTextTitulo.text.toString()
+        if(titulo.isEmpty()){
+            editTextTitulo.setError("Preencha o título")
+            return
+        }
 
+        val autor = editTextAutor.text.toString()
+        if(autor.isEmpty()){
+            editTextAutor.setError("Preencha o título")
+            return
+        }
+
+        val categoria = spinnerCategoria.getSelectedItemId()
+
+        val livro = Livro(titulo = titulo, autor = autor, idCategoria = categoria)
+
+        val uri = activity?.contentResolver?.insert(ContentProviderLivros.ENDERECO_LIVROS,
+        livro.toContentValues()
+        )
+
+        if(uri == null){
+            Snackbar.make(editTextTitulo, "Erro ao inserir livro", Snackbar.LENGTH_INDEFINITE).show()
+        }else{
+            findNavController().navigate(R.id.action_novolivro_to_listalivros)
+        }
     }
 
     fun cancelar(){

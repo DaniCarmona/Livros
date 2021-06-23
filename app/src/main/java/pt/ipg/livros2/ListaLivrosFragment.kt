@@ -23,6 +23,8 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     private var _binding: FragmentListaLivrosBinding? = null
     private var adapterLivros : AdapterLivros? = null
 
+    //todo: atualiza lista livros ao voltar atras
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!

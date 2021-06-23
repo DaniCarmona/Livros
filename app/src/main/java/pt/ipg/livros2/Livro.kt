@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.provider.BaseColumns
 
-data class Livro (var id: Long = -1, var titulo: String, var autor: String, var idCategoria: Long, var nomeCategoria: String?) {
+data class Livro (var id: Long = -1, var titulo: String, var autor: String, var idCategoria: Long, var nomeCategoria: String? = null) {
     fun toContentValues(): ContentValues {
         val valores = ContentValues().apply {
             put(TabelaLivros.CAMPO_TITULO, titulo)
