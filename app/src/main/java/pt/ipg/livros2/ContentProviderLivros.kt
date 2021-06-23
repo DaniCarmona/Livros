@@ -30,7 +30,7 @@ class ContentProviderLivros : ContentProvider(){
             URI_LIVROS -> TabelaLivros(bd).query(
                 projection as Array<String>,
                 selection,
-                selectionArgs as Array<String>,
+                selectionArgs as Array<String>?,
                 null,
                 null,
                 sortOrder
@@ -46,7 +46,7 @@ class ContentProviderLivros : ContentProvider(){
             URI_CATEGORIAS -> TabelaCategorias(bd).query(
                 projection as Array<String>,
                 selection,
-                selectionArgs as Array<String>,
+                selectionArgs as Array<String>?,
                 null,
                 null,
                 sortOrder

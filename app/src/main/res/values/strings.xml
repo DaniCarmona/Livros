@@ -13,4 +13,6 @@
     <string name="categoria">Categoria:</string>
     <string name="autor">Autor</string>
     <string name="t_tulo">Título</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
