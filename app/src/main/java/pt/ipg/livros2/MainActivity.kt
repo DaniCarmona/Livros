@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import pt.ipg.livros2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -57,16 +58,20 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> {
-                if(DadosApp.fragmentListaLivros.processaOpcaoMenu(item)){
-                    return true
-                }else{
-                    return super.onOptionsItemSelected(item)
-                }
+        val processado = return when (item.itemId) {
+            R.id.action_settings -> {
+                Toast.makeText(this, "Livros v.1.0", Toast.LENGTH_LONG).show()
+                true
+            }
+            else -> when(menuAtual){
+                    R.menu.menu_lista_livros->DadosApp.fragmentListaLivros!!.processaOpcaoMenu(item)
+                    R.menu.menu_novo_livro->DadosApp.fragmentNovoLivro!!.processaOpcaoMenu(item)
+                    else-> false
             }
         }
+
+        return if(processado) true else super.onOptionsItemSelected(item)
+
     }
 
 
