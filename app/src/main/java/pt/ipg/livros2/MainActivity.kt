@@ -17,6 +17,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var menu: Menu
 
+    var menuAtual = R.menu.menu_lista_livros
+        set(value){
+            field = value
+            invalidateOptionsMenu()
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,9 +45,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_lista_livros, menu)
+        menuInflater.inflate(menuAtual, menu)
         this.menu = menu
-        atualizaMenuListaLivros(false)
+        if(menuAtual == R.menu.menu_lista_livros) {
+            atualizaMenuListaLivros(false)
+        }
         return true
     }
 
