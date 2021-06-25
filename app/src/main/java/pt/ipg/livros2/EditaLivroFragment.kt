@@ -1,6 +1,7 @@
 package pt.ipg.livros2
 
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.SimpleCursorAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
@@ -73,8 +75,29 @@ class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
             return
         }
 
-        val categoria = spinnerCategoria.getSelectedItemId()
+        val idCategoria = spinnerCategoria.getSelectedItemId()
 
+        DadosApp.livroSelecionado!!.titulo = titulo
+        DadosApp.livroSelecionado!!.autor = autor
+        DadosApp.livroSelecionado!!.idCategoria = idCategoria
+
+        val uriLivro = Uri.withAppendedPath(ContentProviderLivros.ENDERECO_LIVROS, DadosApp.livroSelecionado!!.id.toString())
+
+
+        val registos = activity?.contentResolver?.update(
+            uriLivro,
+            DadosApp.livroSelecionado!!.toContentValues(),
+            null,
+            null
+        )
+
+        if(registos != 1){
+            Toast.makeText(requireContext(), "Erro ao alterar o livro", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        Toast.makeText(requireContext(), "Livro alterado com sucesso", Toast.LENGTH_LONG).show()
+        navegaListaLivros()
     }
 
     fun cancelar(){
