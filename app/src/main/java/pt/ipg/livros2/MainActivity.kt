@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                     R.menu.menu_lista_livros->(DadosApp.fragment as ListaLivrosFragment).processaOpcaoMenu(item)
                     R.menu.menu_novo_livro->(DadosApp.fragment as NovoLivroFragment).processaOpcaoMenu(item)
                     R.menu.menu_edita_livro->(DadosApp.fragment as EditaLivroFragment).processaOpcaoMenu(item)
+                    R.menu.menu_elimina_livro->(DadosApp.fragment as EliminaLivroFragment).processaOpcaoMenu(item)
                     else-> false
             }
         }

@@ -15,4 +15,8 @@
     <string name="titulo">Título</string>
     <string name="guardar">Guardar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="sucesso_eliminar_livro">Livro eliminado com sucesso</string>
+    <string name="erro_eliminar_livro">Erro ao eliminar o livro</string>
+    <string name="erro_alterar_livro">Erro ao alterar o livro</string>
+    <string name="sucesso_alterar_livro">Livro alterado com sucesso</string>
 </resources>

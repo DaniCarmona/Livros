@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar
  * Use the [EditaLivroFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
+class EditaLivroFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor>  {
 
     private lateinit var editTextTitulo: EditText
     private lateinit var editTextAutor: EditText
@@ -92,11 +92,11 @@ class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
         )
 
         if(registos != 1){
-            Toast.makeText(requireContext(), "Erro ao alterar o livro", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), R.string.erro_alterar_livro, Toast.LENGTH_LONG).show()
             return
         }
 
-        Toast.makeText(requireContext(), "Livro alterado com sucesso", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), R.string.sucesso_alterar_livro, Toast.LENGTH_LONG).show()
         navegaListaLivros()
     }
 
@@ -197,7 +197,7 @@ class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
      * @param loader The Loader that is being reset.
      */
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        TODO("Not yet implemented")
+
     }
 
     private fun atualizaSpinnerCategoria(data: Cursor?) {

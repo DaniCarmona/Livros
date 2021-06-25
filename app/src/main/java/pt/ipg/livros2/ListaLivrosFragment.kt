@@ -64,7 +64,7 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     fun navegaEliminarLivro(){
-        // todo: navega
+        findNavController().navigate(R.id.action_ListaLivrosFragment_to_EliminaLivroFragment)
     }
 
     fun processaOpcaoMenu(item: MenuItem): Boolean {
