@@ -60,7 +60,7 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     fun navegaAlterarLivro(){
-        // todo: navega
+        findNavController().navigate(R.id.action_ListaLivrosFragment_to_EditaLivroFragment)
     }
 
     fun navegaEliminarLivro(){

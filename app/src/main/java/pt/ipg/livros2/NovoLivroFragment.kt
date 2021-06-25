@@ -62,6 +62,10 @@ class NovoLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor> {
         _binding = null
     }
 
+    fun navegaListaLivros(){
+        findNavController().navigate(R.id.action_novolivro_to_listalivros)
+    }
+
     fun guarda(){
         val titulo = editTextTitulo.text.toString()
         if(titulo.isEmpty()){
@@ -86,7 +90,7 @@ class NovoLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor> {
         if(uri == null){
             Snackbar.make(editTextTitulo, "Erro ao inserir livro", Snackbar.LENGTH_INDEFINITE).show()
         }else{
-            findNavController().navigate(R.id.action_novolivro_to_listalivros)
+            navegaListaLivros()
         }
     }
 
@@ -96,11 +100,11 @@ class NovoLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor> {
 
     fun processaOpcaoMenu(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_guardar_edita_livro -> {
+            R.id.action_guardar_novo_livro -> {
                 guarda()
                 return true
             }
-            R.id.action_cancelar_edita_livro -> {
+            R.id.action_cancelar_novo_livro -> {
                 cancelar()
                 return true
             }
