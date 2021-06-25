@@ -49,6 +49,8 @@ class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
 
         LoaderManager.getInstance(this)
             .initLoader(ID_LOADER_MANAGER_CATEGORIAS, null, this)
+        editTextTitulo.setText(DadosApp.livroSelecionado!!.titulo)
+        editTextAutor.setText(DadosApp.livroSelecionado!!.autor)
 
     }
 
@@ -184,6 +186,20 @@ class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
             intArrayOf(android.R.id.text1),
             0
         )
+
+        atualizaCategoriaSelecionada()
+    }
+
+    private fun atualizaCategoriaSelecionada() {
+        val idCategoria = DadosApp.livroSelecionado!!.idCategoria
+        val ultimaCategoria = spinnerCategoria.count-1
+
+        for (i in 0..ultimaCategoria){
+            if(idCategoria == spinnerCategoria.getItemIdAtPosition(i)){
+                spinnerCategoria.setSelection(i)
+                return
+            }
+        }
     }
 
     companion object {
