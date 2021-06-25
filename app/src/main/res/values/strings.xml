@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Livros2</string>
+    <string name="app_name">Livros</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="lista_livros_fragment_label">Livros</string>

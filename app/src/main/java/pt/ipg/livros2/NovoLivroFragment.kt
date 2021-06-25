@@ -38,7 +38,7 @@ class NovoLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor> {
         // Inflate the layout for this fragment
         _binding = FragmentNovoLivroBinding.inflate(inflater, container, false)
 
-        DadosApp.fragmentNovoLivro= this
+        DadosApp.fragment= this
         (activity as MainActivity).menuAtual = R.menu.menu_novo_livro
 
         return binding.root

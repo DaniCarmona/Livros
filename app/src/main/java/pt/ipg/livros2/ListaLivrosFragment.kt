@@ -35,7 +35,7 @@ class ListaLivrosFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     ): View? {
         _binding = FragmentListaLivrosBinding.inflate(inflater, container, false)
 
-        DadosApp.fragmentListaLivros = this
+        DadosApp.fragment = this
         (activity as MainActivity).menuAtual = R.menu.menu_lista_livros
 
         return binding.root

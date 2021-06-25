@@ -1,10 +1,12 @@
 package pt.ipg.livros2
 
+import androidx.fragment.app.Fragment
+
 class DadosApp {
     companion object{
         lateinit var activity: MainActivity
-        var fragmentListaLivros: ListaLivrosFragment? = null
-        var fragmentNovoLivro: NovoLivroFragment? = null
+        lateinit var fragment: Fragment
+
         var livroSelecionado: Livro? = null
     }
 }
