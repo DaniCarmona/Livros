@@ -60,12 +60,14 @@ class EditaLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor>  {
         val titulo = editTextTitulo.text.toString()
         if(titulo.isEmpty()){
             editTextTitulo.setError("Preencha o título")
+            editTextTitulo.requestFocus()
             return
         }
 
         val autor = editTextAutor.text.toString()
         if(autor.isEmpty()){
             editTextAutor.setError("Preencha o título")
+            editTextAutor.requestFocus()
             return
         }
 
