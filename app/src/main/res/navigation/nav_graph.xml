@@ -31,8 +31,8 @@
     <fragment
         android:id="@+id/EditaLivroFragment"
         android:name="pt.ipg.livros2.EditaLivroFragment"
-        android:label="fragment_edita_livro"
-        tools:layout="@layout/fragment_edita_livro" >
+        android:label="@string/edita_livros_fragment_label"
+        tools:layout="@layout/fragment_edita_livro">
         <action
             android:id="@+id/action_EditaLivroFragment_to_ListaLivrosFragment"
             app:destination="@id/ListaLivrosFragment" />
