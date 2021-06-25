@@ -15,7 +15,7 @@
         android:id="@+id/editTextTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/t_tulo"
+        android:hint="@string/titulo"
         android:inputType="textLongMessage|text|textAutoComplete" />
 
     </com.google.android.material.textfield.TextInputLayout>
