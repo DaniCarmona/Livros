@@ -8,10 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.SimpleAdapter
 import android.widget.SimpleCursorAdapter
 import android.widget.Spinner
-import androidx.core.view.get
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
@@ -98,11 +96,11 @@ class NovoLivroFragment : Fragment(),  LoaderManager.LoaderCallbacks<Cursor> {
 
     fun processaOpcaoMenu(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_guardar_novo_livro -> {
+            R.id.action_guardar_edita_livro -> {
                 guarda()
                 return true
             }
-            R.id.action_cancelar_novo_livro -> {
+            R.id.action_cancelar_edita_livro -> {
                 cancelar()
                 return true
             }
